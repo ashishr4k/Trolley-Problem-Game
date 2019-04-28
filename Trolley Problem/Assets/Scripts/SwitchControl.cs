@@ -31,7 +31,7 @@ public class SwitchControl: MonoBehaviour
 		}else{
 			sce.curr_out = 1;
 		}
-		Debug.Log(""+sce.curr_out);
+		Debug.Log("Track: "+sce.curr_out);
 	}
 
 	//hovering over the switch
