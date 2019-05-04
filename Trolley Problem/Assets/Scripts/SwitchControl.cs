@@ -28,6 +28,7 @@ public class SwitchControl: MonoBehaviour
 		//example of switching between two choices
 		if(sce.curr_out < sce.outcomes){
 			sce.curr_out++;
+            sce.train.GetComponent<Animator>().SetInteger("Choice", sce.curr_out);
 		}else{
 			sce.curr_out = 1;
 		}
