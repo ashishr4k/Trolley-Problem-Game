@@ -8,15 +8,16 @@ public class Scenario : MonoBehaviour
 {
 	public int outcomes;
 	public int curr_out = 1;
-    private float sce_time = 5f;
-    //private bool over = false;
-    private static int id;
     //Text descriptions of choices
     public Text choiceA;
     public Text choiceB;
 
     public GameObject train;
-    Animator m_Animator;
+    public Animator m_Animator;
+    public GameObject EndScreen;
+    public float sce_time = 7f;
+    private static int id;
+    bool over = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,8 +25,8 @@ public class Scenario : MonoBehaviour
         choiceA.text = "Description of A";
         choiceB.text = "Description of B";
         //Debug.Log(id);
-        m_Animator =  train.GetComponent<Animator>();
-        Debug.Log(m_Animator.GetInteger("Choice"));
+        m_Animator = train.GetComponent<Animator>();
+        EndScreen.SetActive(false);
     }
 
     // Update is called once per frame
@@ -33,17 +34,30 @@ public class Scenario : MonoBehaviour
     {
         //Debug.Log((int)Time.timeSinceLevelLoad);
         //Example call to end scenario if using timer instead of checking when train reaches end of track
-        //if (Time.timeSinceLevelLoad > sce_time)
+        if (Time.timeSinceLevelLoad > sce_time && !over)
         {
-            //ScenearioEnd();
+            ScenearioEnd();
         }
     }
 
 	void ScenearioEnd(){
         //code to write to database and display stats from database
+
+        
+        //increment scenario id
         id++;
-        Debug.Log("Next Scene ID: " + id);
-        //over = true;
+        over = true;
+
+        Debug.Log("Choice Made: " + m_Animator.GetInteger("Choice"));
+        //Debug.Log("Next Scene ID: " + id);
+
+        //End screen
+        EndScreen.SetActive(true);
+        
+    }
+    public void ReloadScene()
+    {
+        //reload scene
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
