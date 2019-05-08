@@ -2,14 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwitchControl: MonoBehaviour
+public class SwitchControl: MonoBehaviour 
 {
 	public Scenario sce;
     private bool canChangeChoice = true;
+    public int[] betweenO;
+    int i = 0;
+
     // Start is called before the first frame update
     void Start()
     {
         //Debug.Log(""+sce.outcomes);
+        
     }
 
     // Update is called once per frame
@@ -17,7 +21,7 @@ public class SwitchControl: MonoBehaviour
     {
         //temporary way of not allowing the choice to change after passing interchange (REMOVE LATER)
         //TODO: change bool with colliders instead
-        if (Time.timeSinceLevelLoad > 2.5f) canChangeChoice = false;
+        //if (Time.timeSinceLevelLoad > 2.5f) canChangeChoice = false;
     }
 
 	//clicking the switch
@@ -31,7 +35,7 @@ public class SwitchControl: MonoBehaviour
         if (canChangeChoice)
         {
             //make sure the choice is within scenario bounds ie. if there are two choices loop back to choice one after clicking the switch
-            if (sce.curr_out < sce.outcomes)
+            /*if (sce.curr_out < sce.outcomes)
             {
                 sce.curr_out++;
 
@@ -39,7 +43,16 @@ public class SwitchControl: MonoBehaviour
             else
             {
                 sce.curr_out = 1;
+            }*/
+            if (i < betweenO.Length - 1)
+            {
+                i++;
             }
+            else
+            {
+                i = 0;
+            }
+            sce.curr_out = betweenO[i];
         }
 		//Debug.Log("Track: "+sce.curr_out);
 

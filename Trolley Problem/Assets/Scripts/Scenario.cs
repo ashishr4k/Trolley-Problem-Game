@@ -6,27 +6,58 @@ using UnityEngine.SceneManagement;
 
 public class Scenario : MonoBehaviour
 {
-	public int outcomes;
-	public int curr_out = 1;
-    //Text descriptions of choices
-    public Text choiceA;
-    public Text choiceB;
-
-    public GameObject train;
+    public int outcomes;        //number of choices/tracks
+	public int curr_out = 2;    //current track
+    
+    public Text[] choiceText;   //Text descriptions of choices
+    public GameObject train;    
     public Animator m_Animator;
     public GameObject EndScreen;
+    public Text EndScreenText;
+    public GameObject Finish;
+    public GameObject Next;
     public float sce_time = 7f;
     private static int id;
     bool over = false;
+    public int people1;
+    public int people2;
+    public int people3;
+    public GameObject[] pTrack1;
+    public GameObject[] pTrack2;
+    public GameObject[] pTrack3;
+
+
+    public GameObject Track3;
+    public GameObject Switch2;
     // Start is called before the first frame update
     void Start()
     {
+        LoadScenarioData(id);
         //Replace with call from database if storing scenario info in database
-        choiceA.text = "Description of A";
-        choiceB.text = "Description of B";
+        //choiceText[0].text = "Description of A";
+        //choiceText[1].text = "Description of B";
+        if (outcomes < 3)
+        {
+            Track3.SetActive(false);
+            Switch2.SetActive(false);
+        }
         //Debug.Log(id);
         m_Animator = train.GetComponent<Animator>();
         EndScreen.SetActive(false);
+
+        //people on tracks
+        for(int i = 0;i< people1;i++)
+        {
+            pTrack1[i].SetActive(true);
+        }
+        for(int i = 0;i< people2;i++)
+        {
+            pTrack2[i].SetActive(true);
+        }
+        for (int i = 0; i < people3; i++)
+        {
+            pTrack3[i].SetActive(true);
+        }
     }
 
     // Update is called once per frame
@@ -49,15 +80,44 @@ public class Scenario : MonoBehaviour
         over = true;
 
         Debug.Log("Choice Made: " + m_Animator.GetInteger("Choice"));
-        //Debug.Log("Next Scene ID: " + id);
+        Debug.Log("Next Scene ID: " + id);
 
-        //End screen
+        //Next scenario or finish
         EndScreen.SetActive(true);
-        
+
+        int totalScenarios = 3; 
+
+        if (id < totalScenarios)
+        {
+           
+            Finish.SetActive(false);
+            Next.SetActive(true);
+        }
+        else
+        {
+            Finish.SetActive(true);
+            Next.SetActive(false);
+        }
     }
-    public void ReloadScene()
+
+    //some hardcoded data for scenarios
+    int[] numTracks = { 2, 3, 3 };
+    int[] onTrack1 = { 1, 2, 1 };
+    int[] onTrack2 = { 3, 1, 1 };
+    int[] onTrack3 = { 0, 2, 1 };
+    string[] infoTrack1 = { "Test", "Test3","Test5" };
+    string[] infoTrack2 = { "Test2", "Test4", "Test6" };
+    string[] infoTrack3 = { "", "Testb", "Testc" };
+    string[] endText = { "% Test", "% Test2", "% Test3" };
+    void LoadScenarioData(int id)
     {
-        //reload scene
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        outcomes = numTracks[id];
+        people1 = onTrack1[id];
+        people2 = onTrack2[id];
+        people3 = onTrack3[id];
+        choiceText[0].text = infoTrack1[id];
+        choiceText[1].text = infoTrack2[id];
+        choiceText[2].text = infoTrack3[id];
+        EndScreenText.text = endText[id];
     }
 }
