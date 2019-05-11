@@ -6,9 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class Scenario : MonoBehaviour
 {
-    public int outcomes;        //number of choices/tracks
+    private static int id;
+
+    private int outcomes;        //number of choices/tracks
 	public int curr_out = 2;    //current track
-    
     public Text[] choiceText;   //Text descriptions of choices
     public GameObject train;    
     public Animator m_Animator;
@@ -17,7 +18,6 @@ public class Scenario : MonoBehaviour
     public GameObject Finish;
     public GameObject Next;
     public float sce_time = 7f;
-    private static int id;
     bool over = false;
     public int people1;
     public int people2;
@@ -29,35 +29,28 @@ public class Scenario : MonoBehaviour
 
     public GameObject Track3;
     public GameObject Switch2;
+
+    int totalScenarios = 1;
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Number of Scenarios: "+totalScenarios);
         LoadScenarioData(id);
-        //Replace with call from database if storing scenario info in database
-        //choiceText[0].text = "Description of A";
-        //choiceText[1].text = "Description of B";
+        
+
         if (outcomes < 3)
         {
             Track3.SetActive(false);
             Switch2.SetActive(false);
         }
-        //Debug.Log(id);
+
         m_Animator = train.GetComponent<Animator>();
         EndScreen.SetActive(false);
 
         //people on tracks
-        for(int i = 0;i< people1;i++)
-        {
-            pTrack1[i].SetActive(true);
-        }
-        for(int i = 0;i< people2;i++)
-        {
-            pTrack2[i].SetActive(true);
-        }
-        for (int i = 0; i < people3; i++)
-        {
-            pTrack3[i].SetActive(true);
-        }
+        generatePeople(people1, pTrack1);
+        generatePeople(people2, pTrack2);
+        generatePeople(people3, pTrack3);
     }
 
     // Update is called once per frame
@@ -80,12 +73,10 @@ public class Scenario : MonoBehaviour
         over = true;
 
         Debug.Log("Choice Made: " + m_Animator.GetInteger("Choice"));
-        Debug.Log("Next Scene ID: " + id);
+        //Debug.Log("Next Scene ID: " + id);
 
         //Next scenario or finish
         EndScreen.SetActive(true);
-
-        int totalScenarios = 3; 
 
         if (id < totalScenarios)
         {
@@ -95,8 +86,17 @@ public class Scenario : MonoBehaviour
         }
         else
         {
+            id = 0;
             Finish.SetActive(true);
             Next.SetActive(false);
+        }
+    }
+
+    void generatePeople(int people, GameObject[] track)
+    {
+        for (int i = 0; i < people; i++)
+        {
+            track[i].SetActive(true);
         }
     }
 

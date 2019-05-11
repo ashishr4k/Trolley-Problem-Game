@@ -7,6 +7,8 @@ TagManager:
   - Info1
   - Info2
   - Button
+  - music
+  - volume
   layers:
   - Default
   - TransparentFX

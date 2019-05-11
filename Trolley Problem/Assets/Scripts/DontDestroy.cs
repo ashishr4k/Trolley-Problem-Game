@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DisableButton : MonoBehaviour
+public class DontDestroy : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -15,13 +15,15 @@ public class DisableButton : MonoBehaviour
     {
         
     }
-
-    void OnTriggerEnter2D(Collider2D other)
+	void Awake()
     {
-        if(other.gameObject.tag == "Button")
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("music");
+
+        if (objs.Length > 1)
         {
-            other.gameObject.SetActive(false);
-            //Debug.Log("disabled");
+            Destroy(this.gameObject);
         }
+
+        DontDestroyOnLoad(this.gameObject);
     }
 }
