@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class Scenario : MonoBehaviour
 {
     private static int id;
+  
 
     private int outcomes;        //number of choices/tracks
 	public int curr_out = 2;    //current track
