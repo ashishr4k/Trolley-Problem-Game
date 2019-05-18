@@ -75,7 +75,7 @@ public class Scenario : MonoBehaviour
         {
             if (!array[i])
             {
-                Debug.Log("next: "+ i);
+                //Debug.Log("next: "+ i);
 
                 return i;
             }
