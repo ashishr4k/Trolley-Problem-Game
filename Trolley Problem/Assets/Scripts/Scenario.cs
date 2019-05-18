@@ -17,14 +17,10 @@ public class Scenario : MonoBehaviour
     public Text EndScreenText;
     public GameObject Finish;
     public GameObject Next;
-    public float sce_time = 7f;
-    public int people1;
-    public int people2;
-    public int people3;
-    public GameObject[] pTrack1;
-    public GameObject[] pTrack2;
-    public GameObject[] pTrack3;
 
+    int people1;
+    int people2;
+    int people3;
 
     public GameObject Track3;
     public GameObject Switch2;
@@ -32,22 +28,19 @@ public class Scenario : MonoBehaviour
     const int totalScenarios = 3;
     bool[] skip;    //true to skip
 
+    public GameObject char1;
+    public GameObject spawner1;
+    public GameObject spawner2;
+    public GameObject spawner3;
     // Start is called before the first frame update
     void Start()
     {
         //levels to skip
         skip = GetLevels();
-        //if (skip[id])
-        {
-            id = SkipLevels(skip, id);
-        }
-        for (int i = 0; i < skip.Length; i++)
-        {
-            //Debug.Log(skip[i]);
-        }
+        id = SkipLevels(skip, id);
+
         //Debug.Log("Number of Scenarios: "+totalScenarios);
         LoadScenarioData(id);
-        
 
         if (outcomes < 3)
         {
@@ -58,10 +51,10 @@ public class Scenario : MonoBehaviour
         m_Animator = train.GetComponent<Animator>();
         EndScreen.SetActive(false);
 
-        //people on tracks
-        generatePeople(people1, pTrack1);
-        generatePeople(people2, pTrack2);
-        generatePeople(people3, pTrack3);
+        //people on tracks 
+        LoadPeople(people1, spawner1);
+        LoadPeople(people2, spawner2);
+        LoadPeople(people3, spawner3);
     }
 
     // Update is called once per frame
@@ -69,28 +62,25 @@ public class Scenario : MonoBehaviour
     {
 
     }
-    int SkipLevels(bool[] array, int id)
+
+    int SkipLevels(bool[] levelStates, int id)
     {
-        for (int i = id; i < array.Length; i++)
+        for (int i = id; i < levelStates.Length; i++)
         {
-            if (!array[i])
+            if (!levelStates[i])
             {
                 //Debug.Log("next: "+ i);
-
                 return i;
             }
         }
-        return array.Length;
+        return levelStates.Length;
     }
+
 	public void ScenearioEnd(){
 
         //increment scenario id
         id++;
         id = SkipLevels(skip, id);
-        //if (skip[id])
-        {
-            //id = SkipLevels(skip, id);
-        }
 
         //Debug.Log("Choice Made: " + m_Animator.GetInteger("Track"));
         //Debug.Log("Next Scene ID: " + id);
@@ -112,11 +102,14 @@ public class Scenario : MonoBehaviour
         }
     }
 
-    void generatePeople(int people, GameObject[] track)
+    void LoadPeople(int nPeople, GameObject startPos)
     {
-        for (int i = 0; i < people; i++)
+        //some sort of switch statement to decide character prefab being instantiated
+
+        for (int i = 0; i < nPeople; i++)
         {
-            track[i].SetActive(true);
+            float offset = (float)i / 2;
+            Instantiate(char1, startPos.transform.position + (offset * Vector3.right), Quaternion.identity);
         }
     }
 
@@ -142,7 +135,7 @@ public class Scenario : MonoBehaviour
     }
 
 
-    //code from https://answers.unity.com/questions/940020/playerprefsx-intarray.html for storing array in playerprefs modified for use
+    //code from https://answers.unity.com/questions/940020/playerprefsx-intarray.html for storing getting serialized array in playerprefs
     public static bool[] GetLevels()
     {
         string[] data = PlayerPrefs.GetString("Level", "true").Split('|');
