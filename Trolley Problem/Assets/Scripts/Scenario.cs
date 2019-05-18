@@ -135,7 +135,7 @@ public class Scenario : MonoBehaviour
     }
 
 
-    //code from https://answers.unity.com/questions/940020/playerprefsx-intarray.html for storing getting serialized array in playerprefs
+    //code from https://answers.unity.com/questions/940020/playerprefsx-intarray.html for getting serialized array stored in playerprefs
     public static bool[] GetLevels()
     {
         string[] data = PlayerPrefs.GetString("Level", "true").Split('|');
