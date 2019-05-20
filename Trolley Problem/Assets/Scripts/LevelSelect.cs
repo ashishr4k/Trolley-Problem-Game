@@ -83,4 +83,16 @@ public class LevelSelect : MonoBehaviour
         }
         return result;
     }
+	
+	public void SetPreferenceCar(){
+        PlayerPrefs.SetString("Layout", "Car");
+        //Debug.Log(PlayerPrefs.GetString("Layout"));
+	}
+
+    public void SetPreferenceTrain()
+    {
+        PlayerPrefs.SetString("Layout", "Train");
+        //Debug.Log(PlayerPrefs.GetString("Layout"));
+
+    }
 }
