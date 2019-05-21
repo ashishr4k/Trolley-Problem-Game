@@ -23,7 +23,7 @@ public class TrackSwitch : MonoBehaviour
         {
             //Debug.Log("hit");
             int test = other.GetComponentInChildren<TrackSwitchButton>().choice;
-            other.gameObject.SetActive(false);
+            //other.gameObject.SetActive(false);
             sce.m_Animator.SetInteger("Track", test);
             sce.curr_out = test;
             //Debug.Log(test);

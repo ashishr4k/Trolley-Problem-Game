@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelSelect : MonoBehaviour
 {
@@ -9,16 +10,30 @@ public class LevelSelect : MonoBehaviour
     public GameObject button;
     public const int numScenarios = 3;
     public bool[] levelState;
+    public Sprite tick;
+    public Sprite noTick;
+    public GameObject trainBtn;
+    public GameObject carBtn;
+    public GameObject noLevels;
     // Start is called before the first frame update
     void Start()
     {
         for (int i = 0; i < numScenarios; i++)
         {
-            button.GetComponent<LevelButton>().num = i+1;
-            Instantiate(button, new Vector3(0, 1f-i, 0), Quaternion.identity);
+            button.GetComponentInChildren<LevelButton>().num = i + 1;
+            Instantiate(button, new Vector3(gameObject.transform.position.x,gameObject.transform.position.y-i, 0), Quaternion.identity);
         }
 
         levelState = GetLevels();
+
+        if(PlayerPrefs.GetString("Layout") == "Car")
+        {
+            SetPreferenceCar();
+        }
+        else
+        {
+            SetPreferenceTrain();
+        }
         
     }
 
@@ -28,15 +43,23 @@ public class LevelSelect : MonoBehaviour
         
     }
 
-    
+    IEnumerator RemoveAfterSeconds(int seconds, GameObject obj)
+    {
+        yield return new WaitForSeconds(seconds);
+        obj.SetActive(false);
+    }
     public void SaveState()
     {
         if (CheckArray(levelState))
         {
-            Debug.Log("NOT ALLOWED");
+            noLevels.SetActive(true);
+            StartCoroutine(RemoveAfterSeconds(2, noLevels));
+
+            //Debug.Log("NOT ALLOWED")
         }
         else
         {
+            noLevels.SetActive(false);
             SetLevels(levelState);
             gameController.LoadMainMenu();
         }
@@ -86,12 +109,17 @@ public class LevelSelect : MonoBehaviour
 	
 	public void SetPreferenceCar(){
         PlayerPrefs.SetString("Layout", "Car");
+        carBtn.GetComponent<Image>().sprite = tick;
+        trainBtn.GetComponent<Image>().sprite = noTick;
         //Debug.Log(PlayerPrefs.GetString("Layout"));
 	}
 
     public void SetPreferenceTrain()
     {
         PlayerPrefs.SetString("Layout", "Train");
+        carBtn.GetComponent<Image>().sprite = noTick;
+        trainBtn.GetComponent<Image>().sprite = tick;
+
         //Debug.Log(PlayerPrefs.GetString("Layout"));
 
     }

@@ -7,11 +7,15 @@ public class LevelButton : MonoBehaviour
     //public bool state = true;
     public int num;
     LevelSelect levelManager;
+    public GameObject text;
+    public Sprite tick;
+    public Sprite noTick;
+
     // Start is called before the first frame update
     void Start()
     {
         levelManager = GameObject.FindGameObjectWithTag("levelManager").GetComponent<LevelSelect>();
-        GetComponentInChildren<TextMesh>().text = "Level " + num;
+        text.GetComponent<TextMesh>().text = "Level " + num;
     }
 
     // Update is called once per frame
@@ -19,11 +23,14 @@ public class LevelButton : MonoBehaviour
     {
         if(levelManager.levelState[num - 1])
         {
-            GetComponent<SpriteRenderer>().color = Color.red;
+            //GetComponent<SpriteRenderer>().color = Color.red;
+            gameObject.GetComponent<SpriteRenderer>().sprite = noTick;
         }
         else
         {
-            GetComponent<SpriteRenderer>().color = Color.green;
+            //GetComponent<SpriteRenderer>().color = Color.green;
+            gameObject.GetComponent<SpriteRenderer>().sprite = tick;
+
         }
     }
 

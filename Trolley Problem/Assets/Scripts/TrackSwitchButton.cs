@@ -7,10 +7,17 @@ public class TrackSwitchButton : MonoBehaviour
     public bool change;
     public int choice;
     public int[] tracks;
+    public Sprite switchLeft;
+    public Sprite switchRight;
+    public Sprite arrowA;
+    public Sprite arrowB;
+    public GameObject arrow;
     // Start is called before the first frame update
     void Start()
     {
         choice = tracks[0];
+        gameObject.GetComponent<SpriteRenderer>().sprite = switchLeft;
+        arrow.GetComponentInChildren<SpriteRenderer>().sprite = arrowA;
     }
 
     // Update is called once per frame
@@ -26,12 +33,14 @@ public class TrackSwitchButton : MonoBehaviour
         if (change)
         {
             choice = tracks[1];
-            GetComponent<SpriteRenderer>().color = Color.blue;
+            gameObject.GetComponent<SpriteRenderer>().sprite = switchRight;
+            arrow.GetComponentInChildren<SpriteRenderer>().sprite = arrowB;
         }
         else
         {
             choice = tracks[0];
-            GetComponent<SpriteRenderer>().color = Color.red;
+            gameObject.GetComponent<SpriteRenderer>().sprite = switchLeft;
+            arrow.GetComponentInChildren<SpriteRenderer>().sprite = arrowA;
 
         }
     }
