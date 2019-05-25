@@ -15,4 +15,8 @@ public class PersonHit : MonoBehaviour
     {
         
     }
+    public void HitSound()
+    {
+        gameObject.GetComponent<AudioSource>().Play();
+    }
 }

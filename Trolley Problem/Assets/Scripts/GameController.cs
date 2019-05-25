@@ -84,4 +84,17 @@ public class GameController : MonoBehaviour
     {
         SceneManager.LoadScene("Game");
     }
+    public void QuickStartGame()
+    {
+        bool[] a = GetLevels();
+        bool[] level = new bool[numScenarios];
+        for (int i = 0; i < numScenarios; i++)
+        {
+            level[i] = false;
+        }
+        SetLevels(level);
+        Debug.Log("Quick Start");
+
+        SceneManager.LoadScene("Game");
+    }
 }

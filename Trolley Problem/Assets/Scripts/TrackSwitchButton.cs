@@ -35,12 +35,14 @@ public class TrackSwitchButton : MonoBehaviour
             choice = tracks[1];
             gameObject.GetComponent<SpriteRenderer>().sprite = switchRight;
             arrow.GetComponentInChildren<SpriteRenderer>().sprite = arrowB;
+            gameObject.GetComponent<AudioSource>().Play();
         }
         else
         {
             choice = tracks[0];
             gameObject.GetComponent<SpriteRenderer>().sprite = switchLeft;
             arrow.GetComponentInChildren<SpriteRenderer>().sprite = arrowA;
+            gameObject.GetComponent<AudioSource>().Play();
 
         }
     }

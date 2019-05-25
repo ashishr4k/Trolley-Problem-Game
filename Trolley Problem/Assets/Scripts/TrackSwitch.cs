@@ -34,6 +34,10 @@ public class TrackSwitch : MonoBehaviour
             //Debug.Log("end");
             sce.ScenearioEnd();
         }
-        
+
+        if (other.tag == "Person")
+        {
+            other.GetComponent<PersonHit>().HitSound();
+        }
     }
 }

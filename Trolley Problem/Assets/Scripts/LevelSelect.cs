@@ -45,7 +45,9 @@ public class LevelSelect : MonoBehaviour
 
     IEnumerator RemoveAfterSeconds(int seconds, GameObject obj)
     {
+        //float curr = Time.timeSinceLevelLoad;
         yield return new WaitForSeconds(seconds);
+        //Debug.Log(Time.timeSinceLevelLoad - curr);
         obj.SetActive(false);
     }
     public void SaveState()
@@ -61,7 +63,7 @@ public class LevelSelect : MonoBehaviour
         {
             noLevels.SetActive(false);
             SetLevels(levelState);
-            gameController.LoadMainMenu();
+            gameController.LoadGame();
         }
     }
     bool CheckArray(bool[] array)
