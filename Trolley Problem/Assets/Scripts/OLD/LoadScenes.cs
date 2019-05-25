@@ -13,6 +13,9 @@ public class LoadScenes : MonoBehaviour
             case "LevelSelectButton":
                 SceneManager.LoadScene("Level Selection");
                 break;
+            case "Quit":
+                SceneManager.LoadScene("MainMenu");
+                break;
             case "QuickStartButton":
                 SceneManager.LoadScene("Game");
                 break;
