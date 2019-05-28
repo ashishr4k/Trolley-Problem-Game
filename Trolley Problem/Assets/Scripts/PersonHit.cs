@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PersonHit : MonoBehaviour
 {
+    public GameObject blood;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,5 +19,6 @@ public class PersonHit : MonoBehaviour
     public void HitSound()
     {
         gameObject.GetComponent<AudioSource>().Play();
-    }
-}
+        blood.SetActive(true);
+        GetComponent<SpriteRenderer>().enabled = false;
+    }}
