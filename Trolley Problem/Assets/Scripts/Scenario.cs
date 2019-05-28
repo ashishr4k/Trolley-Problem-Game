@@ -28,10 +28,11 @@ public class Scenario : MonoBehaviour
     const int totalScenarios = 3;
     bool[] skip;    //true to skip
 
-    public GameObject char1;
     public GameObject spawner1;
     public GameObject spawner2;
     public GameObject spawner3;
+
+    public GameObject char1;
     // Start is called before the first frame update
     void Start()
     {

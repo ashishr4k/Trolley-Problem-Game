@@ -34,7 +34,6 @@ public class LevelSelect : MonoBehaviour
         {
             SetPreferenceTrain();
         }
-        
     }
 
     // Update is called once per frame

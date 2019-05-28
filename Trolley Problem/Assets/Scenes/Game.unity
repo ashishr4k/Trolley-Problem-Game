@@ -5088,10 +5088,10 @@ MonoBehaviour:
   Next: {fileID: 293905546}
   Track3: {fileID: 1197206531}
   Switch2: {fileID: 1604273052}
-  char1: {fileID: 7071113113861487022, guid: ad51287d7abe9c64cbf7372880dc4bf6, type: 3}
   spawner1: {fileID: 1989511572}
   spawner2: {fileID: 1535496762}
   spawner3: {fileID: 1820038619}
+  char1: {fileID: 7071113113861487022, guid: ad51287d7abe9c64cbf7372880dc4bf6, type: 3}
 --- !u!4 &1324552899
 Transform:
   m_ObjectHideFlags: 0
