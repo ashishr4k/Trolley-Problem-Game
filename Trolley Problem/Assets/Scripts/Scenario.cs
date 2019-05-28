@@ -122,7 +122,7 @@ public class Scenario : MonoBehaviour
     string[] infoTrack1 = { "An adult", "Two homeless adults","Your friend" };
     string[] infoTrack2 = { "Two elderly men", "A homeless child", "Your Neighbour" };
     string[] infoTrack3 = { "", "A wealthy couple", "Your boss" };
-    string[] endText = { "50 % picked the same choice", "50 % picked the same choice", "50 % picked the same choice" };
+    string[] endText = { "100% of players made the same choice as you", "73% of players made the same choice as you", "12% of players made the same choice as you" };
     void LoadScenarioData(int id)
     {
         outcomes = numTracks[id];
