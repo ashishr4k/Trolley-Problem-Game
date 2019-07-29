@@ -25,7 +25,7 @@ public class Scenario : MonoBehaviour
     public GameObject Track3;
     public GameObject Switch2;
 
-    const int totalScenarios = 3;
+    int totalScenarios;
     bool[] skip;    //true to skip
 
     public GameObject spawner1;
@@ -36,6 +36,7 @@ public class Scenario : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        totalScenarios = GetLevels().Length;
         //levels to skip
         skip = GetLevels();
         id = SkipLevels(skip, id);
@@ -115,14 +116,14 @@ public class Scenario : MonoBehaviour
     }
 
     //some hardcoded data for scenarios
-    int[] numTracks = { 2, 3, 3 };
-    int[] onTrack1 = { 1, 2, 1 };
-    int[] onTrack2 = { 2, 1, 1 };
-    int[] onTrack3 = { 0, 2, 1 };
-    string[] infoTrack1 = { "An adult", "Two homeless adults","Your friend" };
-    string[] infoTrack2 = { "Two elderly men", "A homeless child", "Your Neighbour" };
-    string[] infoTrack3 = { "", "A wealthy couple", "Your boss" };
-    string[] endText = { "100% of players made the same choice as you", "73% of players made the same choice as you", "12% of players made the same choice as you" };
+    int[] numTracks =   { 2, 3, 3, 2, 3, 2, 2, 2, 2, 2 };
+    int[] onTrack1 =    { 1, 2, 1, 2, 3, 2, 1, 1, 2, 2 };
+    int[] onTrack2 =    { 2, 1, 1, 3, 3, 3, 1, 1, 2, 2 };
+    int[] onTrack3 =    { 0, 2, 1, 2, 2, 2, 0, 0, 0, 0 };
+    string[] infoTrack1 = { "An adult", "Two homeless adults","Your friend", "1","2","3", "1", "2", "3" ,"4"};
+    string[] infoTrack2 = { "Two elderly men", "A homeless child", "Your Neighbour", "1", "2", "3", "1", "2", "3", "4" };
+    string[] infoTrack3 = { "", "A wealthy couple", "Your boss", "", "2", "", "1", "2", "3", "4" };
+    string[] endText = { "100%", "73%", "12%", "1", "2", "3", "1", "2", "3", "4" };
     void LoadScenarioData(int id)
     {
         outcomes = numTracks[id];
@@ -132,7 +133,7 @@ public class Scenario : MonoBehaviour
         choiceText[0].text = infoTrack1[id];
         choiceText[1].text = infoTrack2[id];
         choiceText[2].text = infoTrack3[id];
-        EndScreenText.text = endText[id];
+        EndScreenText.text = endText[id]+" of players made the same choice as you";
     }
 
 

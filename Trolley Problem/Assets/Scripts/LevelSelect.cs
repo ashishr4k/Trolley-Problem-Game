@@ -8,7 +8,7 @@ public class LevelSelect : MonoBehaviour
     
     public GameController gameController;
     public GameObject button;
-    public const int numScenarios = 3;
+    private int numScenarios;
     public bool[] levelState;
     public Sprite tick;
     public Sprite noTick;
@@ -18,10 +18,23 @@ public class LevelSelect : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        numScenarios = GetLevels().Length;
+        Debug.Log(numScenarios);
+        float size = 3f;
+        float offsetx = 1f;
+        float offsety = 0f;
         for (int i = 0; i < numScenarios; i++)
         {
+            
             button.GetComponentInChildren<LevelButton>().num = i + 1;
-            Instantiate(button, new Vector3(gameObject.transform.position.x,gameObject.transform.position.y-i, 0), Quaternion.identity);
+            if (i % 6 == 0 && i!= 0)
+            {
+                Debug.Log("w");
+                offsetx += size;
+                offsety = 0f;
+            }
+            Instantiate(button, new Vector3(gameObject.transform.position.x + offsetx ,gameObject.transform.position.y - offsety, 0), Quaternion.identity);
+            offsety += 1f;
         }
 
         levelState = GetLevels();

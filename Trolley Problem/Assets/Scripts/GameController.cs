@@ -5,7 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    private int numScenarios = 3;
+    
+    private const int numScenarios = 10;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +15,7 @@ public class GameController : MonoBehaviour
             PlayerPrefs.SetString("Layout", "Train");
         }
         bool[] a = GetLevels();
-        if (PlayerPrefs.GetString("FirstTime") == "")
+        if (PlayerPrefs.GetString("Version") != "2")
         {
             bool[] level = new bool[numScenarios];
             for(int i  = 0; i < numScenarios; i++)
@@ -22,8 +23,8 @@ public class GameController : MonoBehaviour
                 level[i] = false;
             }
             SetLevels(level);
-            Debug.Log("Set all levels");
-            PlayerPrefs.SetString("FirstTime", "No");
+            Debug.Log("setting all levels");
+            PlayerPrefs.SetString("Version", "2");
         }
     }
 
