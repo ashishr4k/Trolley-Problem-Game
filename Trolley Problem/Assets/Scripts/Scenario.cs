@@ -116,14 +116,14 @@ public class Scenario : MonoBehaviour
     }
 
     //some hardcoded data for scenarios
-    int[] numTracks =   { 2, 3, 3, 2, 3, 2, 2, 2, 2, 2 };
-    int[] onTrack1 =    { 1, 2, 1, 2, 3, 2, 1, 1, 2, 2 };
-    int[] onTrack2 =    { 2, 1, 1, 3, 3, 3, 1, 1, 2, 2 };
-    int[] onTrack3 =    { 0, 2, 1, 2, 2, 2, 0, 0, 0, 0 };
-    string[] infoTrack1 = { "An adult", "Two homeless adults","Your friend", "1","2","3", "1", "2", "3" ,"4"};
-    string[] infoTrack2 = { "Two elderly men", "A homeless child", "Your Neighbour", "1", "2", "3", "1", "2", "3", "4" };
-    string[] infoTrack3 = { "", "A wealthy couple", "Your boss", "", "2", "", "1", "2", "3", "4" };
-    string[] endText = { "100%", "73%", "12%", "1", "2", "3", "1", "2", "3", "4" };
+    int[] numTracks =   { 2, 3, 3, 2, 3, 2, 2, 2, 3, 2 };
+    int[] onTrack1 =    { 1, 2, 1, 2, 1, 2, 1, 1, 2, 2 };
+    int[] onTrack2 =    { 2, 1, 1, 1, 1, 3, 1, 1, 2, 1 };
+    int[] onTrack3 =    { 0, 2, 1, 0, 2, 0, 0, 0, 1, 0 };
+    string[] infoTrack1 = { "An adult", "Two homeless men","Your friend", "Two teenagers","A terminally ill man","Two children", "A Nobel prize winner", "A doctor", "Two women" ,"A married couple"};
+    string[] infoTrack2 = { "Two elderly men", "A homeless child", "Your Neighbour", "A famous actor", "90 year old man", "Three retirees", "An Olympic medallist", "An artist", "Two men", "Their child" };
+    string[] infoTrack3 = { "", "A wealthy couple", "Your boss", "", "Two criminals", "", "", "", "A pregnant woman", "" };
+    string[] endText = { "60%", "73%", "12%", "22%", "72%", "31%", "55%", "29%", "70%", "40%" };
     void LoadScenarioData(int id)
     {
         outcomes = numTracks[id];
