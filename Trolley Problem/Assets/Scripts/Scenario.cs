@@ -33,6 +33,7 @@ public class Scenario : MonoBehaviour
     public GameObject spawner3;
 
     public GameObject char1;
+    public GameObject tutorialPanel;
     // Start is called before the first frame update
     void Start()
     {
@@ -57,12 +58,25 @@ public class Scenario : MonoBehaviour
         LoadPeople(people1, spawner1);
         LoadPeople(people2, spawner2);
         LoadPeople(people3, spawner3);
+
+
+        tutorialPanel.SetActive(false);
+        //Tutorial
+        if (id == 0)
+        {
+            tutorialPanel.SetActive(true);
+            Time.timeScale = 0f;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetMouseButton(0) && Time.timeScale == 0f)
+        {
+            Time.timeScale = 1f;
+            tutorialPanel.SetActive(false);
+        }
     }
 
     int SkipLevels(bool[] levelStates, int id)
