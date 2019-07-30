@@ -9,6 +9,6 @@ public class DelayDestory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Destroy(gameObject, 8f);   
+        Destroy(gameObject, 7.5f);   
     }
 }
