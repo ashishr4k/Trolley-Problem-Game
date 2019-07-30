@@ -13,6 +13,8 @@ TagManager:
   - Scenario
   - Switch
   - levelManager
+  - Train
+  - Person
   layers:
   - Default
   - TransparentFX
