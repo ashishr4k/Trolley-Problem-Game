@@ -15,6 +15,7 @@ public class LevelSelect : MonoBehaviour
     public GameObject trainBtn;
     public GameObject carBtn;
     public GameObject noLevels;
+    public Canvas canvas;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +34,8 @@ public class LevelSelect : MonoBehaviour
                 offsetx += size;
                 offsety = 0f;
             }
-            Instantiate(button, new Vector3(gameObject.transform.position.x + offsetx ,gameObject.transform.position.y - offsety, 0), Quaternion.identity);
+            GameObject b = Instantiate(button, new Vector3(gameObject.transform.position.x + offsetx ,gameObject.transform.position.y - offsety, 0), Quaternion.identity);
+            b.transform.parent = canvas.transform;
             offsety += 1f;
         }
 

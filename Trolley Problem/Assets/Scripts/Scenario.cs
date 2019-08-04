@@ -34,6 +34,7 @@ public class Scenario : MonoBehaviour
 
     public GameObject char1;
     public GameObject tutorialPanel;
+    public Canvas canvas;
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +68,11 @@ public class Scenario : MonoBehaviour
             tutorialPanel.SetActive(true);
             Time.timeScale = 0f;
         }
+        Vector3 offset = new Vector3(0.8f, 0.5f, 0);
+        Vector3 offset2 = new Vector3(0.8f, -0.5f, 0);
+        choiceText[0].transform.position = worldToUISpace(canvas, spawner1.transform.position + offset);
+        choiceText[1].transform.position = worldToUISpace(canvas, spawner2.transform.position + offset);
+        choiceText[2].transform.position = worldToUISpace(canvas, spawner3.transform.position + offset2);
     }
 
     // Update is called once per frame
@@ -162,5 +168,18 @@ public class Scenario : MonoBehaviour
             val[i] = bool.TryParse(data[i], out levelState) ? levelState : false;
         }
         return val;
+    }
+
+    //https://stackoverflow.com/questions/45046256/move-ui-recttransform-to-world-position 
+    public Vector3 worldToUISpace(Canvas parentCanvas, Vector3 worldPos)
+    {
+        //Convert the world for screen point so that it can be used with ScreenPointToLocalPointInRectangle function
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
+        Vector2 movePos;
+
+        //Convert the screenpoint to ui rectangle local point
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(parentCanvas.transform as RectTransform, screenPos, parentCanvas.worldCamera, out movePos);
+        //Convert the local point to world point
+        return parentCanvas.transform.TransformPoint(movePos);
     }
 }
