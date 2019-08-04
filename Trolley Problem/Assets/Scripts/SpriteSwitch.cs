@@ -19,7 +19,7 @@ public class SpriteSwitch : MonoBehaviour
                 gameObject.GetComponent<AudioSource>().clip = car;
                 gameObject.GetComponent<AudioSource>().Pause();
                 gameObject.GetComponent<AudioSource>().Play();
-                Debug.Log("Car");
+                //Debug.Log("Car");
 
             }
             //Debug.Log("Car");
@@ -32,7 +32,7 @@ public class SpriteSwitch : MonoBehaviour
             {
                 gameObject.GetComponent<AudioSource>().clip = train;
                 
-                Debug.Log("Train");
+                //Debug.Log("Train");
             }
 
         }

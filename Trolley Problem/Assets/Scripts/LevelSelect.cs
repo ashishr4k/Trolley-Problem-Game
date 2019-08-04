@@ -20,7 +20,7 @@ public class LevelSelect : MonoBehaviour
     void Start()
     {
         numScenarios = GetLevels().Length;
-        Debug.Log(numScenarios);
+        //Debug.Log(numScenarios);
         float size = 3f;
         float offsetx = 1f;
         float offsety = 0f;
@@ -30,7 +30,7 @@ public class LevelSelect : MonoBehaviour
             button.GetComponentInChildren<LevelButton>().num = i + 1;
             if (i % 6 == 0 && i!= 0)
             {
-                Debug.Log("w");
+                //Debug.Log("w");
                 offsetx += size;
                 offsety = 0f;
             }

@@ -94,7 +94,7 @@ public class GameController : MonoBehaviour
             level[i] = false;
         }
         SetLevels(level);
-        Debug.Log("Quick Start");
+        //Debug.Log("Quick Start");
 
         SceneManager.LoadScene("Game");
     }
