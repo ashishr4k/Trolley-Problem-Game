@@ -15,11 +15,12 @@ public class LevelSelect : MonoBehaviour
     public GameObject trainBtn;
     public GameObject carBtn;
     public GameObject noLevels;
+    public Canvas canvas;
     // Start is called before the first frame update
     void Start()
     {
         numScenarios = GetLevels().Length;
-        Debug.Log(numScenarios);
+        //Debug.Log(numScenarios);
         float size = 3f;
         float offsetx = 1f;
         float offsety = 0f;
@@ -29,11 +30,12 @@ public class LevelSelect : MonoBehaviour
             button.GetComponentInChildren<LevelButton>().num = i + 1;
             if (i % 6 == 0 && i!= 0)
             {
-                Debug.Log("w");
+                //Debug.Log("w");
                 offsetx += size;
                 offsety = 0f;
             }
-            Instantiate(button, new Vector3(gameObject.transform.position.x + offsetx ,gameObject.transform.position.y - offsety, 0), Quaternion.identity);
+            GameObject b = Instantiate(button, new Vector3(gameObject.transform.position.x + offsetx ,gameObject.transform.position.y - offsety, 0), Quaternion.identity);
+            b.transform.parent = canvas.transform;
             offsety += 1f;
         }
 

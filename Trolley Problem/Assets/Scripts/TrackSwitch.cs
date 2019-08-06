@@ -5,16 +5,21 @@ using UnityEngine;
 public class TrackSwitch : MonoBehaviour
 {
     Scenario sce;
+    public float speed = 1f;
+    
     // Start is called before the first frame update
     void Start()
     {
         sce = GameObject.FindGameObjectWithTag("Scenario").GetComponent<Scenario>();
+        sce.m_Animator.speed = speed;
+        gameObject.GetComponent<AudioSource>().pitch = speed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        sce.m_Animator.speed = speed;
+        gameObject.GetComponent<AudioSource>().pitch = speed;
     }
 
     void OnTriggerEnter2D(Collider2D other)

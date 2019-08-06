@@ -14,6 +14,7 @@ public class Volume : MonoBehaviour
     void Start()
     {
         audioSrc = GameObject.FindGameObjectWithTag("music").GetComponent<AudioSource>();
+        slider.value = audioSrc.volume;
     }
     void Awake()
     {
