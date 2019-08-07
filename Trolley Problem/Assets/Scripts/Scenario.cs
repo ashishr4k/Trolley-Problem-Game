@@ -122,6 +122,11 @@ public class Scenario : MonoBehaviour
             Finish.SetActive(true);
             Next.SetActive(false);
         }
+
+        int clicks = Switch2.GetComponentInChildren<TrackSwitchButton>().getClicks();
+        float timeTaken = Switch2.GetComponentInChildren<TrackSwitchButton>().getFirstTime();
+        Debug.Log("Times Clicked: " + clicks);
+        Debug.Log("First Click: " + timeTaken + " seconds");
     }
 
     void LoadPeople(int nPeople, GameObject startPos)

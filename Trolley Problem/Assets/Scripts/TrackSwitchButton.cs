@@ -12,9 +12,18 @@ public class TrackSwitchButton : MonoBehaviour
     public Sprite arrowA;
     public Sprite arrowB;
     public GameObject arrow;
+    public bool locked;
+    public static float timeTaken;
+    public static int clicks;
+
+    private bool firstClick;
     // Start is called before the first frame update
     void Start()
     {
+        locked = false;
+        firstClick = true;
+        clicks = 0;
+        timeTaken = -1;
         choice = tracks[0];
         gameObject.GetComponent<SpriteRenderer>().sprite = switchLeft;
         arrow.GetComponentInChildren<SpriteRenderer>().sprite = arrowA;
@@ -28,27 +37,50 @@ public class TrackSwitchButton : MonoBehaviour
 
     void OnMouseDown()
     {
-        change = !change;
-        //replace with sprite changes instead of colour
-        if (change)
-        {
-            choice = tracks[1];
-            gameObject.GetComponent<SpriteRenderer>().sprite = switchRight;
-            arrow.GetComponentInChildren<SpriteRenderer>().sprite = arrowB;
-            gameObject.GetComponent<AudioSource>().Play();
-        }
-        else
-        {
-            choice = tracks[0];
-            gameObject.GetComponent<SpriteRenderer>().sprite = switchLeft;
-            arrow.GetComponentInChildren<SpriteRenderer>().sprite = arrowA;
-            gameObject.GetComponent<AudioSource>().Play();
+        
 
+        if (!locked)
+        {
+            clicks++;
+            change = !change;
+            //replace with sprite changes instead of colour
+            if (change)
+            {
+                choice = tracks[1];
+                gameObject.GetComponent<SpriteRenderer>().sprite = switchRight;
+                arrow.GetComponentInChildren<SpriteRenderer>().sprite = arrowB;
+                gameObject.GetComponent<AudioSource>().Play();
+            }
+            else
+            {
+                choice = tracks[0];
+                gameObject.GetComponent<SpriteRenderer>().sprite = switchLeft;
+                arrow.GetComponentInChildren<SpriteRenderer>().sprite = arrowA;
+                gameObject.GetComponent<AudioSource>().Play();
+
+            }
+
+            if (firstClick)
+            {
+                timeTaken = Time.timeSinceLevelLoad;
+                //Debug.Log(timeTaken);
+                firstClick = false;
+            }
         }
     }
 
     void OnMouseOver()
     {
 
+    }
+
+    public int getClicks()
+    {
+        return clicks;
+    }
+
+    public float getFirstTime()
+    {
+        return timeTaken;
     }
 }

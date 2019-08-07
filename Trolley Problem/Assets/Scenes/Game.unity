@@ -5556,6 +5556,7 @@ MonoBehaviour:
   arrowA: {fileID: 21300000, guid: 6bd8a6fc12e066343a9b56d8888add25, type: 3}
   arrowB: {fileID: 21300002, guid: 6bd8a6fc12e066343a9b56d8888add25, type: 3}
   arrow: {fileID: 1514136174}
+  locked: 0
 --- !u!61 &1204222348
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -8181,6 +8182,7 @@ MonoBehaviour:
   arrowA: {fileID: 21300000, guid: 6bd8a6fc12e066343a9b56d8888add25, type: 3}
   arrowB: {fileID: 21300010, guid: 6bd8a6fc12e066343a9b56d8888add25, type: 3}
   arrow: {fileID: 1993188304}
+  locked: 0
 --- !u!61 &1891327752
 BoxCollider2D:
   m_ObjectHideFlags: 0
