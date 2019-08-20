@@ -31,9 +31,6 @@ public class TrackSwitch : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-
-
-
         if (other.tag == "Switch")
         {
             //Debug.Log("hit");
