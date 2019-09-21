@@ -35,16 +35,49 @@ public class Scenario : MonoBehaviour
     public GameObject char1;
     public GameObject tutorialPanel;
     public Canvas canvas;
+
+    public DBController db;
+
     // Start is called before the first frame update
     void Start()
     {
+        db.StartCoroutine(db.GetScenarioData(id+1));
+
         totalScenarios = GetLevels().Length;
         //levels to skip
         skip = GetLevels();
         id = SkipLevels(skip, id);
 
         //Debug.Log("Number of Scenarios: "+totalScenarios);
-        LoadScenarioData(id);
+        //LoadScenarioData(id);
+
+        Vector3 offset = new Vector3(0.8f, 0.5f, 0);
+        Vector3 offset2 = new Vector3(0.8f, -0.5f, 0);
+        choiceText[0].transform.position = worldToUISpace(canvas, spawner1.transform.position + offset);
+        choiceText[1].transform.position = worldToUISpace(canvas, spawner2.transform.position + offset);
+        choiceText[2].transform.position = worldToUISpace(canvas, spawner3.transform.position + offset2);
+    }
+
+    public IEnumerator SetScenario(string data)
+    {
+        Debug.Log(data);
+
+        string[] stringSeparators = new string[] { "," };
+        string[] result = data.Split(stringSeparators, System.StringSplitOptions.None);
+
+        outcomes = int.Parse(result[1]);
+        people1 = int.Parse(result[2]); ;
+        people2 = int.Parse(result[3]);
+        people3 = int.Parse(result[4]);
+        choiceText[0].text = result[5];
+        choiceText[1].text = result[6];
+        choiceText[2].text = result[7];
+        EndScreenText.text = result[8] + " of players made the same choice as you";
+
+        //people on tracks 
+        LoadPeople(people1, spawner1);
+        LoadPeople(people2, spawner2);
+        LoadPeople(people3, spawner3);
 
         if (outcomes < 3)
         {
@@ -55,24 +88,16 @@ public class Scenario : MonoBehaviour
         m_Animator = train.GetComponent<Animator>();
         EndScreen.SetActive(false);
 
-        //people on tracks 
-        LoadPeople(people1, spawner1);
-        LoadPeople(people2, spawner2);
-        LoadPeople(people3, spawner3);
-
-
         tutorialPanel.SetActive(false);
+
         //Tutorial
         if (id == 0)
         {
             tutorialPanel.SetActive(true);
             Time.timeScale = 0f;
         }
-        Vector3 offset = new Vector3(0.8f, 0.5f, 0);
-        Vector3 offset2 = new Vector3(0.8f, -0.5f, 0);
-        choiceText[0].transform.position = worldToUISpace(canvas, spawner1.transform.position + offset);
-        choiceText[1].transform.position = worldToUISpace(canvas, spawner2.transform.position + offset);
-        choiceText[2].transform.position = worldToUISpace(canvas, spawner3.transform.position + offset2);
+
+        yield return null;
     }
 
     // Update is called once per frame
@@ -138,28 +163,6 @@ public class Scenario : MonoBehaviour
             Instantiate(char1, startPos.transform.position + (offset * Vector3.right), Quaternion.identity);
         }
     }
-
-    //some hardcoded data for scenarios
-    int[] numTracks =   { 2, 3, 3, 2, 3, 2, 2, 2, 3, 2 };
-    int[] onTrack1 =    { 1, 2, 1, 2, 1, 2, 1, 1, 2, 2 };
-    int[] onTrack2 =    { 2, 1, 1, 1, 1, 3, 1, 1, 2, 1 };
-    int[] onTrack3 =    { 0, 2, 1, 0, 2, 0, 0, 0, 1, 0 };
-    string[] infoTrack1 = { "An adult", "Two homeless men","Your friend", "Two teenagers","A terminally ill man","Two children", "A Nobel prize winner", "A doctor", "Two women" ,"A married couple"};
-    string[] infoTrack2 = { "Two elderly men", "A homeless child", "Your Neighbour", "A famous actor", "90 year old man", "Three retirees", "An Olympic medallist", "An artist", "Two men", "Their child" };
-    string[] infoTrack3 = { "", "A wealthy couple", "Your boss", "", "Two criminals", "", "", "", "A pregnant woman", "" };
-    string[] endText = { "60%", "73%", "12%", "22%", "72%", "31%", "55%", "29%", "70%", "40%" };
-    void LoadScenarioData(int id)
-    {
-        outcomes = numTracks[id];
-        people1 = onTrack1[id];
-        people2 = onTrack2[id];
-        people3 = onTrack3[id];
-        choiceText[0].text = infoTrack1[id];
-        choiceText[1].text = infoTrack2[id];
-        choiceText[2].text = infoTrack3[id];
-        EndScreenText.text = endText[id]+" of players made the same choice as you";
-    }
-
 
     //code from https://answers.unity.com/questions/940020/playerprefsx-intarray.html for getting serialized array stored in playerprefs
     public static bool[] GetLevels()

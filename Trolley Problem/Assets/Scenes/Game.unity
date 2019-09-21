@@ -6491,6 +6491,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1324552899}
   - component: {fileID: 1324552898}
+  - component: {fileID: 1324552900}
   m_Layer: 0
   m_Name: ScenarioManager
   m_TagString: Scenario
@@ -6529,6 +6530,7 @@ MonoBehaviour:
   char1: {fileID: 7071113113861487022, guid: ad51287d7abe9c64cbf7372880dc4bf6, type: 3}
   tutorialPanel: {fileID: 448818526}
   canvas: {fileID: 926326857}
+  db: {fileID: 1324552900}
 --- !u!4 &1324552899
 Transform:
   m_ObjectHideFlags: 0
@@ -6543,6 +6545,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1324552900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1324552897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ab2368fdb049b1459d72ad98244ba60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sc: {fileID: 1324552898}
 --- !u!1 &1346219292
 GameObject:
   m_ObjectHideFlags: 0
