@@ -11,7 +11,7 @@ public class Database
     public IEnumerator AddResult(int choiceMade, int millisecondsTaken, int scenarioId)
     {
 
-        Debug.Log("Add result to DB. User chose option " + choiceMade + ". Time taken was: " + millisecondsTaken + "ms");
+        //Debug.Log("Add result to DB. User chose option " + choiceMade + ". Time taken was: " + millisecondsTaken + "ms");
 
         var form = new WWWForm();
 
