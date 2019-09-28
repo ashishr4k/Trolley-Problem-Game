@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
-    { 
+    {
         if (PlayerPrefs.GetString("Layout") == "")
         {
             PlayerPrefs.SetString("Layout", "Train");
@@ -30,9 +30,10 @@ public class GameController : MonoBehaviour
     {
         SceneManager.LoadScene("Level Selection");
     }
-    public void LoadGame()
+    public void LoadSelectedLevels()
     {
         PlayerPrefs.SetString("Quick", "No");
+        PlayerPrefs.SetString("Reset", "Yes");
         SceneManager.LoadScene("Game");
     }
     public void QuickStartGame()

@@ -9,10 +9,10 @@ public class Scenario : MonoBehaviour
 {
     private static int id = 1;
 
-    private int outcomes;        //number of choices/tracks
-	public int curr_out = 2;    //current track
-    public Text[] choiceText;   //Text descriptions of choices
-    public GameObject train;    
+    private int outcomes;
+    public int curr_out = 2;
+    public Text[] choiceText;
+    public GameObject train;
     public Animator m_Animator;
     public GameObject EndScreen;
     public Text EndScreenText;
@@ -39,45 +39,49 @@ public class Scenario : MonoBehaviour
     [SerializeField]
     private DBController Database;
 
+    public Sprite[] characterSprites;
+    private bool[] SkipLevels;
     // Start is called before the first frame update
     void Start()
     {
-        if (PlayerPrefs.GetString("Quick") == "No")
-        {
-            id = CheckForSkip(id);
+
+        string levelPrefs = PlayerPrefs.GetString("LevelsToSkip");
+        string[] stringSeparators = new string[] { "," };
+        string[] result = levelPrefs.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+
+        SkipLevels = new bool[result.Length];
+        for (int i = 0; i < result.Length; i++){
+            bool.TryParse(result[i], out bool state);
+            SkipLevels[i] = state;
         }
+
         if (PlayerPrefs.GetString("Reset") == "Yes")
         {
             id = 1;
             PlayerPrefs.SetString("Reset", "No");
         }
+
+        if (PlayerPrefs.GetString("Quick") == "No")
+        {
+            id = CheckForSkip();
+        }
         Database.StartCoroutine(Database.GetScenarioData(id, SetScenario));
     }
-    
-    int CheckForSkip(int id)
+
+    int CheckForSkip()
     {
-        
-        string levelPrefs = PlayerPrefs.GetString("LevelsToSkip");
-        string[] stringSeparators = new string[] { "," };
-        string[] result = levelPrefs.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
-
-        for (int i = id; i < result.Length; i++)
+        for (int i = id - 1; i < SkipLevels.Length; i++)
         {
-            bool.TryParse(result[i], out bool check);
-
-            if (!check)
+            if (SkipLevels[i])
             {
-                id = i + 1;
-                Debug.Log("id:" + id);
-                return id;
+                return i+1;
             }
         }
-        return id;
+        return SkipLevels.Length + 1;
     }
     void SetScenario(string data, bool done)
     {
-        Debug.Log(data + ";" + id);
-
+        //Debug.Log(data + ";" + id);
         if (!done || string.IsNullOrEmpty(data)) return;
 
         string[] stringSeparators = new string[] { "," };
@@ -94,7 +98,7 @@ public class Scenario : MonoBehaviour
 
         totalScenarios = int.Parse(result[result.Length -1]);
 
-        //people on tracks 
+        //people on tracks
         LoadPeople(people1, spawner1);
         LoadPeople(people2, spawner2);
         LoadPeople(people3, spawner3);
@@ -140,13 +144,14 @@ public class Scenario : MonoBehaviour
         Database.StartCoroutine(Database.Submit(id, clicks, timeTaken, curr_out));
 
         id++;
+        id = CheckForSkip();
         //Debug.Log("Choice Made: " + m_Animator.GetInteger("Track"));
         //Debug.Log("Next Scene ID: " + id);
 
         //Next scenario or finish
         EndScreen.SetActive(true);
 
-        if (id < totalScenarios)
+        if (id <= totalScenarios)
         {
             Finish.SetActive(false);
             Next.SetActive(true);
@@ -172,7 +177,7 @@ public class Scenario : MonoBehaviour
         }
     }
 
-    //https://stackoverflow.com/questions/45046256/move-ui-recttransform-to-world-position 
+    //https://stackoverflow.com/questions/45046256/move-ui-recttransform-to-world-position
     public Vector3 worldToUISpace(Canvas parentCanvas, Vector3 worldPos)
     {
         //Convert the world for screen point so that it can be used with ScreenPointToLocalPointInRectangle function

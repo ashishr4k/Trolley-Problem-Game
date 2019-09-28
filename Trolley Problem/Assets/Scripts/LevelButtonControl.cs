@@ -6,14 +6,20 @@ using UnityEngine;
 public class LevelButtonControl : MonoBehaviour
 {
     public GameObject buttonTemplate;
+    public GameObject noLevelsText;
     int total;
     bool[] skipLevelState;
     [SerializeField]
     private DBController Database;
+    [SerializeField]
+    private GameController gameController;
+
     // Start is called before the first frame update
     void Start()
     {
-        Database.StartCoroutine(Database.GetTotal(1, Setup));
+      noLevelsText.SetActive(false);
+      Database.StartCoroutine(Database.GetTotal(1, Setup));
+      //Debug.Log(PlayerPrefs.GetString("LevelsToSkip"));
     }
 
     void Setup(int numScenarios, bool done)
@@ -44,7 +50,6 @@ public class LevelButtonControl : MonoBehaviour
                     if (i >= result.Length) break;
                     bool.TryParse(result[i], out skipLevelState[i]);
                 }
-                //Debug.Log(levelPrefs);
             }
 
             for (int i = 0; i < total; i++)
@@ -78,5 +83,30 @@ public class LevelButtonControl : MonoBehaviour
     public bool GetLevelState(int levelID)
     {
         return skipLevelState[levelID-1];
+    }
+
+    public void ValidLevelSelect(){
+      bool valid = false;
+      foreach (bool state in skipLevelState) {
+        if(state){
+          valid = true ;
+          break;
+        }
+      }
+
+      if (valid) {
+        gameController.LoadSelectedLevels();
+      }else {
+        if (!noLevelsText.activeInHierarchy){
+          noLevelsText.SetActive(true);
+          StartCoroutine(RemoveAfterSeconds(2,noLevelsText));
+        }
+      }
+    }
+
+    IEnumerator RemoveAfterSeconds(int seconds, GameObject obj)
+    {
+        yield return new WaitForSeconds(seconds);
+        obj.SetActive(false);
     }
 }
