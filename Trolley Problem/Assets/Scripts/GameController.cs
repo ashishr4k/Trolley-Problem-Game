@@ -20,7 +20,8 @@ public class GameController : MonoBehaviour
     }
     public void LoadResultsScene()
     {
-        SceneManager.LoadScene("MainMenu");
+        DBController db = gameObject.GetComponent<DBController>();
+        StartCoroutine(db.Export());
     }
     public void LoadMainMenu()
     {

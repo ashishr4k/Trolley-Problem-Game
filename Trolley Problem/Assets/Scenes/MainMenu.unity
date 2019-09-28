@@ -727,7 +727,6 @@ GameObject:
   - component: {fileID: 491336127}
   - component: {fileID: 491336126}
   - component: {fileID: 491336125}
-  - component: {fileID: 491336129}
   m_Layer: 0
   m_Name: ResultsButton
   m_TagString: Untagged
@@ -864,18 +863,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 491336123}
   m_CullTransparentMesh: 0
---- !u!114 &491336129
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 491336123}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88cdb0bb6e16a12498a5e226e61ca5a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1225,7 +1212,6 @@ GameObject:
   - component: {fileID: 684826095}
   - component: {fileID: 684826094}
   - component: {fileID: 684826097}
-  - component: {fileID: 684826098}
   m_Layer: 0
   m_Name: LevelSelectButton
   m_TagString: Untagged
@@ -1362,18 +1348,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &684826098
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 684826092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88cdb0bb6e16a12498a5e226e61ca5a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &690858106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1725,7 +1699,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_MethodName: set_mute
+        m_MethodName: 
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1922,6 +1896,7 @@ GameObject:
   - component: {fileID: 1163864096}
   - component: {fileID: 1163864095}
   - component: {fileID: 1163864097}
+  - component: {fileID: 1163864098}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Respawn
@@ -1970,6 +1945,18 @@ MonoBehaviour:
   audioSrc: {fileID: 1361710944}
   slider: {fileID: 995107193}
   muteBtn: {fileID: 916022907}
+--- !u!114 &1163864098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1163864094}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ab2368fdb049b1459d72ad98244ba60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1255856700
 GameObject:
   m_ObjectHideFlags: 0
@@ -3046,7 +3033,6 @@ GameObject:
   - component: {fileID: 2138382949}
   - component: {fileID: 2138382948}
   - component: {fileID: 2138382947}
-  - component: {fileID: 2138382951}
   m_Layer: 0
   m_Name: QuickStartButton
   m_TagString: Untagged
@@ -3183,15 +3169,3 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2138382945}
   m_CullTransparentMesh: 0
---- !u!114 &2138382951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2138382945}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 88cdb0bb6e16a12498a5e226e61ca5a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

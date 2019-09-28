@@ -8,6 +8,7 @@ public class DBController : MonoBehaviour
 
     string getDataUrl = "http://kit301-games.cis.utas.edu.au/scripts/data.php?ID=";
     string submitDataUrl = "http://kit301-games.cis.utas.edu.au/scripts/insert.php";
+    string exportUrl = "http://kit301-games.cis.utas.edu.au/scripts/export.php";
 
     public IEnumerator GetScenarioData(int id, System.Action<string, bool> callback)
     {
@@ -26,7 +27,7 @@ public class DBController : MonoBehaviour
             callback(data, true);
         }
     }
-    
+
     public IEnumerator GetTotal(int id, System.Action<int,bool> callback)
     {
         UnityWebRequest www = UnityWebRequest.Get(getDataUrl + id);
@@ -65,8 +66,19 @@ public class DBController : MonoBehaviour
             }
             else
             {
-                Debug.Log("Form upload complete!");
+                //Debug.Log("Form upload complete!");
             }
+        }
+    }
+
+    public IEnumerator Export()
+    {
+        UnityWebRequest www = UnityWebRequest.Get(exportUrl);
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
         }
     }
 }

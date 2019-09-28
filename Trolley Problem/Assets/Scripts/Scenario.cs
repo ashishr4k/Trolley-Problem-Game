@@ -61,10 +61,7 @@ public class Scenario : MonoBehaviour
             PlayerPrefs.SetString("Reset", "No");
         }
 
-        if (PlayerPrefs.GetString("Quick") == "No")
-        {
-            id = CheckForSkip();
-        }
+        if (PlayerPrefs.GetString("Quick") == "No") id = CheckForSkip();
         Database.StartCoroutine(Database.GetScenarioData(id, SetScenario));
     }
 
@@ -144,7 +141,7 @@ public class Scenario : MonoBehaviour
         Database.StartCoroutine(Database.Submit(id, clicks, timeTaken, curr_out));
 
         id++;
-        id = CheckForSkip();
+        if (PlayerPrefs.GetString("Quick") == "No") id = CheckForSkip();
         //Debug.Log("Choice Made: " + m_Animator.GetInteger("Track"));
         //Debug.Log("Next Scene ID: " + id);
 
