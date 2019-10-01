@@ -23,7 +23,7 @@ public class TrackSwitchButton : MonoBehaviour
         locked = false;
         firstClick = true;
         clicks = 0;
-        timeTaken = -1;
+        timeTaken = 0;
         choice = tracks[0];
         gameObject.GetComponent<SpriteRenderer>().sprite = switchLeft;
         arrow.GetComponentInChildren<SpriteRenderer>().sprite = arrowA;
@@ -41,7 +41,7 @@ public class TrackSwitchButton : MonoBehaviour
         {
             clicks++;
             change = !change;
-            
+
             if (change)
             {
                 choice = tracks[1];

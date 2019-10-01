@@ -32,7 +32,7 @@ public class Scenario : MonoBehaviour
     public GameObject spawner2;
     public GameObject spawner3;
 
-    public GameObject char1;
+    public GameObject Person;
     public GameObject tutorialPanel;
     public Canvas canvas;
 
@@ -112,7 +112,7 @@ public class Scenario : MonoBehaviour
         tutorialPanel.SetActive(false);
 
         //Tutorial
-        if (id == 0)
+        if (id == 1)
         {
             tutorialPanel.SetActive(true);
             Time.timeScale = 0f;
@@ -166,11 +166,12 @@ public class Scenario : MonoBehaviour
     void LoadPeople(int nPeople, GameObject startPos)
     {
         //some sort of switch statement to decide character prefab being instantiated
-
+        //int[] test = {0,1,2,3,4,9};
         for (int i = 0; i < nPeople; i++)
         {
             float offset = (float)i / 2;
-            Instantiate(char1, startPos.transform.position + (offset * Vector3.right), Quaternion.identity);
+            //Person.GetComponent<SpriteRenderer>().sprite = characterSprites[0];
+            Instantiate(Person, startPos.transform.position + (offset * Vector3.right), Quaternion.identity);
         }
     }
 
