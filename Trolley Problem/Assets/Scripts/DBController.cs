@@ -9,6 +9,7 @@ public class DBController : MonoBehaviour
     string getDataUrl = "http://kit301-games.cis.utas.edu.au/scripts/data.php?ID=";
     string submitDataUrl = "http://kit301-games.cis.utas.edu.au/scripts/insert.php";
     string exportUrl = "http://kit301-games.cis.utas.edu.au/scripts/export.php";
+    string scenarioListUrl = "http://kit301-games.cis.utas.edu.au/scripts/listScenarios.php";
 
     public IEnumerator GetScenarioData(int id, System.Action<string, bool> callback)
     {
@@ -48,6 +49,24 @@ public class DBController : MonoBehaviour
         }
     }
 
+    public IEnumerator GetScenarioList(System.Action<string,bool> callback){
+        UnityWebRequest www = UnityWebRequest.Get(scenarioListUrl);
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+            string data = null;
+            callback(data, false);
+        }
+        else
+        {
+            string data = www.downloadHandler.text;
+            //Debug.Log(data);
+            callback(data,true);
+        }
+    }
+
     public IEnumerator Submit(int id, int clicks, float time, int choice)
     {
         WWWForm form = new WWWForm();
@@ -73,7 +92,10 @@ public class DBController : MonoBehaviour
 
     public IEnumerator Export()
     {
-        UnityWebRequest www = UnityWebRequest.Get(exportUrl);
+        WWWForm form = new WWWForm();
+        form.AddField("empty", "myData");
+
+        UnityWebRequest www = UnityWebRequest.Post(exportUrl, form);
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)

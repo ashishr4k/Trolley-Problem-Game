@@ -4,21 +4,13 @@ using UnityEngine;
 
 public class PersonHit : MonoBehaviour
 {
-    public GameObject blood;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public GameObject parts;
+    public GameObject part1;
+    public GameObject part2;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    public void HitSound()
+    public void Hit()
     {
         gameObject.GetComponent<AudioSource>().Play();
-        blood.SetActive(true);
+        parts.SetActive(true);
         GetComponent<SpriteRenderer>().enabled = false;
     }}

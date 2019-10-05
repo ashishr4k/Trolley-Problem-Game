@@ -7,20 +7,20 @@ public class TrackSwitch : MonoBehaviour
 {
     Scenario sce;
     public float speed = 1f;
-
+    private int WaitTime = 0;
     // Start is called before the first frame update
     void Start()
     {
         sce = GameObject.FindGameObjectWithTag("Scenario").GetComponent<Scenario>();
-        sce.m_Animator.speed = speed;
-        gameObject.GetComponent<AudioSource>().pitch = speed;
+        GetComponent<Animator>().enabled = false;
+        GetComponent<AudioSource>().Stop();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        sce.m_Animator.speed = speed;
-        gameObject.GetComponent<AudioSource>().pitch = speed;
+    IEnumerator waitForTime(){
+        yield return new WaitForSeconds(WaitTime);
+        //Debug.Log("start");
+        GetComponent<Animator>().enabled = true;
+        GetComponent<AudioSource>().Play();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -40,7 +40,12 @@ public class TrackSwitch : MonoBehaviour
 
         if (other.tag == "Person")
         {
-            other.GetComponent<PersonHit>().HitSound();
+            other.GetComponent<PersonHit>().Hit();
         }
+    }
+
+    public void SetWaitTime(int time){
+        WaitTime = time;
+        StartCoroutine("waitForTime");
     }
 }

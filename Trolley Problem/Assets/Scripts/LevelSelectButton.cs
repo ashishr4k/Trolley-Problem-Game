@@ -6,6 +6,7 @@ using UnityEngine;
 public class LevelSelectButton : MonoBehaviour
 {
     private int levelID;
+    private int scenarioID;
     public Text buttonText;
 
     [SerializeField]
@@ -16,10 +17,11 @@ public class LevelSelectButton : MonoBehaviour
         SetState(levelButtonController.GetLevelState(levelID));
     }
 
-    public void SetButton(int id)
+    public void SetButton(int sid, int lid)
     {
-        levelID = id;
-        buttonText.text = "Level " + levelID;
+        scenarioID = sid;
+        levelID = lid;
+        buttonText.text = "Scenario " + sid;
     }
 
     public void OnClick()

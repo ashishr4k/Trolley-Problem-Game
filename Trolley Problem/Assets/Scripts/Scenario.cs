@@ -32,24 +32,27 @@ public class Scenario : MonoBehaviour
     public GameObject spawner2;
     public GameObject spawner3;
 
-    public GameObject Person;
+    //public GameObject Person;
     public GameObject tutorialPanel;
     public Canvas canvas;
-
+    public Text timeText;
     [SerializeField]
     private DBController Database;
 
-    public Sprite[] characterSprites;
+    public GameObject[] characters;
     private bool[] SkipLevels;
+    private int[] scenarioList;
+    private int WaitTime = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-
         string levelPrefs = PlayerPrefs.GetString("LevelsToSkip");
         string[] stringSeparators = new string[] { "," };
         string[] result = levelPrefs.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
 
         SkipLevels = new bool[result.Length];
+
         for (int i = 0; i < result.Length; i++){
             bool.TryParse(result[i], out bool state);
             SkipLevels[i] = state;
@@ -62,21 +65,26 @@ public class Scenario : MonoBehaviour
         }
 
         if (PlayerPrefs.GetString("Quick") == "No") id = CheckForSkip();
-        Database.StartCoroutine(Database.GetScenarioData(id, SetScenario));
+        StartCoroutine("ScenarioSetup");
     }
 
-    int CheckForSkip()
-    {
-        for (int i = id - 1; i < SkipLevels.Length; i++)
-        {
-            if (SkipLevels[i])
-            {
-                return i+1;
-            }
-        }
-        return SkipLevels.Length + 1;
+    IEnumerator ScenarioSetup(){
+        yield return Database.GetScenarioList(ScenarioList);
+        Database.StartCoroutine(Database.GetScenarioData(scenarioList[id-1], ScenarioData));
     }
-    void SetScenario(string data, bool done)
+
+    void ScenarioList(string data, bool done){
+        if (!done || string.IsNullOrEmpty(data)) return;
+        string[] stringSeparators = new string[] { "," };
+        string[] result = data.Split(stringSeparators, System.StringSplitOptions.RemoveEmptyEntries);
+
+        scenarioList = new int[result.Length];
+        for (int i = 0; i < result.Length; i++){
+            scenarioList[i] = int.Parse(result[i]);
+        }
+    }
+
+    void ScenarioData(string data, bool done)
     {
         //Debug.Log(data + ";" + id);
         if (!done || string.IsNullOrEmpty(data)) return;
@@ -92,13 +100,26 @@ public class Scenario : MonoBehaviour
         choiceText[1].text = result[6];
         choiceText[2].text = result[7];
         EndScreenText.text = result[8] + " of players made the same choice as you";
+        string chars1 = result[9];
+        string chars2 = result[10];
+        string chars3 = result[11];
+        WaitTime = int.Parse(result[12]);
+        train.GetComponent<TrackSwitch>().SetWaitTime(WaitTime);
+
+        if(int.Parse(result[13]) == 0){
+            //Debug.Log("T");
+            train.GetComponent<SpriteSwitch>().SetLayout("Train");
+        }else{
+            //Debug.Log("C");
+            train.GetComponent<SpriteSwitch>().SetLayout("Car");
+        }
 
         totalScenarios = int.Parse(result[result.Length -1]);
 
         //people on tracks
-        LoadPeople(people1, spawner1);
-        LoadPeople(people2, spawner2);
-        LoadPeople(people3, spawner3);
+        CreatePeople(people1, spawner1, chars1);
+        CreatePeople(people2, spawner2, chars2);
+        CreatePeople(people3, spawner3, chars3);
 
         if (outcomes < 3)
         {
@@ -106,7 +127,7 @@ public class Scenario : MonoBehaviour
             Switch2.SetActive(false);
         }
 
-        m_Animator = train.GetComponent<Animator>();
+        //m_Animator = train.GetComponent<Animator>();
         EndScreen.SetActive(false);
 
         tutorialPanel.SetActive(false);
@@ -125,7 +146,18 @@ public class Scenario : MonoBehaviour
         choiceText[2].transform.position = worldToUISpace(canvas, spawner3.transform.position + offset2);
     }
 
-    // Update is called once per frame
+    int CheckForSkip()
+    {
+        for (int i = id - 1; i < SkipLevels.Length; i++)
+        {
+            if (SkipLevels[i])
+            {
+                return i+1;
+            }
+        }
+        return SkipLevels.Length + 1;
+    }
+
     void Update()
     {
         if (Input.GetMouseButton(0) && Time.timeScale == 0f)
@@ -133,12 +165,32 @@ public class Scenario : MonoBehaviour
             Time.timeScale = 1f;
             tutorialPanel.SetActive(false);
         }
+        float maxWait = 30;
+        timeText.text = "Arrives in: " + Mathf.Clamp(WaitTime - (int)Time.timeSinceLevelLoad, 0f, maxWait) + " seconds";
+    }
+
+    void CreatePeople(int nPeople, GameObject startPos, string chars)
+    {
+        string[] stringSeparators = new string[] { ";" };
+        string[] result = chars.Split(stringSeparators, System.StringSplitOptions.RemoveEmptyEntries);
+
+        int charID = 0;
+        for (int i = 0; i < nPeople; i++)
+        {
+            float offset = (float)i / 2;
+            if(result.Length != 0){
+                charID = int.Parse(result[i]);
+            }else{
+                charID = 0;
+            }
+            GameObject person = Instantiate(characters[charID], startPos.transform.position + (offset * Vector3.right), Quaternion.identity) as GameObject;
+        }
     }
 
 	public void ScenearioEnd(){
         int clicks = Switch2.GetComponentInChildren<TrackSwitchButton>().getClicks();
         float timeTaken = Switch2.GetComponentInChildren<TrackSwitchButton>().getFirstTime();
-        Database.StartCoroutine(Database.Submit(id, clicks, timeTaken, curr_out));
+        Database.StartCoroutine(Database.Submit(scenarioList[id-1], clicks, timeTaken, curr_out));
 
         id++;
         if (PlayerPrefs.GetString("Quick") == "No") id = CheckForSkip();
@@ -147,7 +199,7 @@ public class Scenario : MonoBehaviour
 
         //Next scenario or finish
         EndScreen.SetActive(true);
-
+        timeText.gameObject.SetActive(false);
         if (id <= totalScenarios)
         {
             Finish.SetActive(false);
@@ -161,18 +213,6 @@ public class Scenario : MonoBehaviour
         }
 
         //Debug.Log("Times Clicked: " + clicks + "\t" + "First Click: " + timeTaken + " seconds" + "\t"+ "Choice Made: " + curr_out);
-    }
-
-    void LoadPeople(int nPeople, GameObject startPos)
-    {
-        //some sort of switch statement to decide character prefab being instantiated
-        //int[] test = {0,1,2,3,4,9};
-        for (int i = 0; i < nPeople; i++)
-        {
-            float offset = (float)i / 2;
-            //Person.GetComponent<SpriteRenderer>().sprite = characterSprites[0];
-            Instantiate(Person, startPos.transform.position + (offset * Vector3.right), Quaternion.identity);
-        }
     }
 
     //https://stackoverflow.com/questions/45046256/move-ui-recttransform-to-world-position

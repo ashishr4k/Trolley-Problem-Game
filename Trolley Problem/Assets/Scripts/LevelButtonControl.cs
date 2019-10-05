@@ -18,17 +18,20 @@ public class LevelButtonControl : MonoBehaviour
     void Start()
     {
       noLevelsText.SetActive(false);
-      Database.StartCoroutine(Database.GetTotal(1, Setup));
+      //Database.StartCoroutine(Database.GetTotal(1, Setup));
+      Database.StartCoroutine(Database.GetScenarioList(TestC));
       //Debug.Log(PlayerPrefs.GetString("LevelsToSkip"));
     }
 
-    void Setup(int numScenarios, bool done)
-    {
+    void TestC(string data, bool done){
+        string[] stringSeparators = new string[] { "," };
+        string[] result = data.Split(stringSeparators, System.StringSplitOptions.RemoveEmptyEntries);
+
         if (done)
         {
-            total = numScenarios;
+            total = result.Length;
             skipLevelState = new bool[total];
-
+            
             string levelPrefs = PlayerPrefs.GetString("LevelsToSkip");
             if (string.IsNullOrEmpty(levelPrefs))
             {
@@ -42,13 +45,12 @@ public class LevelButtonControl : MonoBehaviour
             }
             else
             {
-                string[] stringSeparators = new string[] { "," };
-                string[] result = levelPrefs.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+                string[] resultS = levelPrefs.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
 
                 for (int i = 0; i < skipLevelState.Length; i++)
                 {
-                    if (i >= result.Length) break;
-                    bool.TryParse(result[i], out skipLevelState[i]);
+                    if (i >= resultS.Length) break;
+                    bool.TryParse(resultS[i], out skipLevelState[i]);
                 }
             }
 
@@ -56,15 +58,55 @@ public class LevelButtonControl : MonoBehaviour
             {
                 GameObject button = Instantiate(buttonTemplate) as GameObject;
                 button.SetActive(true);
-
                 button.transform.SetParent(buttonTemplate.transform.parent, false);
-
-                button.GetComponent<LevelSelectButton>().SetButton(i + 1);
-
+                button.GetComponent<LevelSelectButton>().SetButton(int.Parse(result[i]), i+1);
                 button.GetComponent<LevelSelectButton>().SetState(skipLevelState[i]);
             }
         }
     }
+    // void Setup(int numScenarios, bool done)
+    // {
+    //     if (done)
+    //     {
+    //         total = numScenarios;
+    //         skipLevelState = new bool[total];
+    //
+    //         string levelPrefs = PlayerPrefs.GetString("LevelsToSkip");
+    //         if (string.IsNullOrEmpty(levelPrefs))
+    //         {
+    //             Debug.Log("Prefs empty... inserting default values");
+    //             string skiplevels = "";
+    //             foreach (bool item in skipLevelState)
+    //             {
+    //                 skiplevels += item + ",";
+    //             }
+    //             PlayerPrefs.SetString("LevelsToSkip", skiplevels);
+    //         }
+    //         else
+    //         {
+    //             string[] stringSeparators = new string[] { "," };
+    //             string[] result = levelPrefs.Split(stringSeparators, StringSplitOptions.RemoveEmptyEntries);
+    //
+    //             for (int i = 0; i < skipLevelState.Length; i++)
+    //             {
+    //                 if (i >= result.Length) break;
+    //                 bool.TryParse(result[i], out skipLevelState[i]);
+    //             }
+    //         }
+    //
+    //         for (int i = 0; i < total; i++)
+    //         {
+    //             GameObject button = Instantiate(buttonTemplate) as GameObject;
+    //             button.SetActive(true);
+    //
+    //             button.transform.SetParent(buttonTemplate.transform.parent, false);
+    //
+    //             button.GetComponent<LevelSelectButton>().SetButton(i + 1);
+    //
+    //             button.GetComponent<LevelSelectButton>().SetState(skipLevelState[i]);
+    //         }
+    //     }
+    // }
 
     public bool ButtonClicked(int levelID)
     {

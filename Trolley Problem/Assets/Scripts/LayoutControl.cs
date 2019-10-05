@@ -22,7 +22,7 @@ public class LayoutControl : MonoBehaviour
           SetLayout("Train");
       }
     }
-    
+
     public void SetLayout(string pref){
       if(pref == "Car"){
           PlayerPrefs.SetString("Layout", pref);
