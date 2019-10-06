@@ -6,15 +6,15 @@ using UnityEngine.UI;
 
 public class Volume : MonoBehaviour
 {
-
-    public AudioSource audioSrc;
+    
+    public AudioListener audioLis;
 	public Slider slider;
 	public Toggle muteBtn;
 
     void Start()
     {
-        audioSrc = GameObject.FindGameObjectWithTag("music").GetComponent<AudioSource>();
-        slider.value = audioSrc.volume;
+        slider.value = AudioListener.volume;
+        muteBtn.isOn = AudioListener.pause;
     }
     void Awake()
     {
@@ -25,11 +25,13 @@ public class Volume : MonoBehaviour
     {
         if (muteBtn.isOn)
         {
-            audioSrc.volume = 0;
+            AudioListener.pause = true;
+            AudioListener.volume = 0;
         }
         else
         {
-            audioSrc.volume = slider.value;
+            AudioListener.pause = false;
+            AudioListener.volume = slider.value;
         }
     }
 }

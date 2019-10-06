@@ -470,12 +470,12 @@ PrefabInstance:
     - target: {fileID: 4102747593842205541, guid: 53855313572d74243b4abd77a907c97f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -128.3
+      value: -128.30005
       objectReference: {fileID: 0}
     - target: {fileID: 4102747593842205541, guid: 53855313572d74243b4abd77a907c97f,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 28.2
+      value: 28.199951
       objectReference: {fileID: 0}
     - target: {fileID: 4102747593842205541, guid: 53855313572d74243b4abd77a907c97f,
         type: 3}
@@ -4593,6 +4593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSrc: {fileID: 0}
+  audioLis: {fileID: 519420029}
   slider: {fileID: 71513549}
   muteBtn: {fileID: 185432766}
 --- !u!4 &1082921656
