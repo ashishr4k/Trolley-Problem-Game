@@ -43,7 +43,7 @@ public class Scenario : MonoBehaviour
     private bool[] SkipLevels;
     private int[] scenarioList;
     private int WaitTime = 0;
-
+    private string[] percentage = {"0","0","0"};
     // Start is called before the first frame update
     void Start()
     {
@@ -99,20 +99,23 @@ public class Scenario : MonoBehaviour
         choiceText[0].text = result[5];
         choiceText[1].text = result[6];
         choiceText[2].text = result[7];
-        EndScreenText.text = result[8] + " of players made the same choice as you";
-        string chars1 = result[9];
-        string chars2 = result[10];
-        string chars3 = result[11];
-        WaitTime = int.Parse(result[12]);
+        string chars1 = result[8];
+        string chars2 = result[9];
+        string chars3 = result[10];
+        WaitTime = int.Parse(result[11]);
         train.GetComponent<TrackSwitch>().SetWaitTime(WaitTime);
 
-        if(int.Parse(result[13]) == 0){
+        if(int.Parse(result[12]) == 0){
             //Debug.Log("T");
             train.GetComponent<SpriteSwitch>().SetLayout("Train");
         }else{
             //Debug.Log("C");
             train.GetComponent<SpriteSwitch>().SetLayout("Car");
         }
+
+        percentage[0] = result[13];
+        percentage[1] = result[14];
+        percentage[2] = result[15];
 
         totalScenarios = int.Parse(result[result.Length -1]);
 
@@ -197,6 +200,7 @@ public class Scenario : MonoBehaviour
         //Debug.Log("Choice Made: " + m_Animator.GetInteger("Track"));
         //Debug.Log("Next Scene ID: " + id);
 
+        EndScreenText.text = percentage[curr_out-1] + " of players made the same choice as you";
         //Next scenario or finish
         EndScreen.SetActive(true);
         timeText.gameObject.SetActive(false);
